@@ -20,24 +20,24 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Movie Manager</a>
+			<a class="navbar-brand" href="{% url 'index' %}">Movie Manager</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li><a href="{% url 'movies' %}">Movies</a></li>
-				<li><a href="#">Wished</a></li>
-				<li><a href="#">Watched</a></li>
-				<li><a href="#">Favorites</a></li>
+				<li><a href="{% url 'favorites' %}">Favorite movies</a></li>
+				<li><a href="{% url 'watched' %}">Wished movies</a></li>
+				<li><a href="{% url 'wished' %}">Watched movies</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Settings</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="#">Log out</a></li>
+						<!--li><a href="#">Settings</a></li>
+						<li role="separator" class="divider"></li-->
+						<li><a href="{% url 'login' %}">Log out</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -45,10 +45,4 @@
 	</div><!-- /.container-fluid -->
 </nav>
 <h1>Welcome to our Movie Manager Django application</h1>
-<p>
-	<a href="{% url 'login' %}">Log In</a>
-</p>
-<p>
-	<a href="{% url 'signup' %}">Sign Up</a>
-</p>
 </body>

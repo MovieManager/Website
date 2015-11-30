@@ -74,3 +74,30 @@ def movie(request, movie_id):
 	return render(request, 'app/movie.html', {
 		'movie': movie,
 	})
+
+def favorites(request):
+	try:
+		movie_list = Movie.objects.order_by('-release_date')
+	except Movie.DoesNotExist:
+		raise Http404('Movie does not exist')
+	return render(request, 'app/movies.html', {
+		'movie_list': movie_list,
+	})
+
+def watched(request):
+	try:
+		movie_list = Movie.objects.order_by('-release_date')
+	except Movie.DoesNotExist:
+		raise Http404('Movie does not exist')
+	return render(request, 'app/movies.html', {
+		'movie_list': movie_list,
+	})
+
+def wished(request):
+	try:
+		movie_list = Movie.objects.order_by('-release_date')
+	except Movie.DoesNotExist:
+		raise Http404('Movie does not exist')
+	return render(request, 'app/movies.html', {
+		'movie_list': movie_list,
+	})
