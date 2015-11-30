@@ -9,6 +9,9 @@ from django.utils import timezone
 import sha
 import urllib2, json
 
+API_KEY = "c98f210d025999131d6987d08f8eecd8"
+API_URL = "https://api.themoviedb.org/3/"
+
 def dataFromUrl(url):
 	response = urllib2.urlopen(url)
 	return json.load(response)
