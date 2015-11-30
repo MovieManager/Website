@@ -1,0 +1,15 @@
+import django
+django.setup()
+from app.models import *
+from django.utils import timezone
+
+User(login='Jean', password='blabla').save()
+Gender(gender_name='Action').save()
+Movie(title='JackieChan', description='Bla', image_url='bla', gender=Gender.objects.get(id=1), release_date=timezone.now()).save()
+#FavoriteMovie(user=User.objects.get(id=1), movie=Movie.objects.get(id=1)).save()
+Movie(title='JackieChan2', description='Bla', image_url='bla', gender=Gender.objects.get(id=1), release_date=timezone.now()).save()
+#FavoriteMovie(user=User.objects.get(id=1), movie=Movie.objects.get(id=2)).save()
+#User.objects.get(id=1).get_favorite_movies()
+User.objects.get(id=1).favorites.add(Movie.objects.get(id=1))
+User.objects.get(id=1).favorites.add(Movie.objects.get(id=2))
+User.objects.get(id=1).favorites.all()
