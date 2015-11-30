@@ -1,8 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
 
 from .models import *
 from django.utils import timezone
+
+import sha
 
 def index(request):
 	return render(request, 'app/index.html', {})
@@ -11,6 +15,24 @@ def login(request):
 	return render(request, 'app/login.html', {})
 
 def signup(request):
+	if len(request.POST) > 0:
+		login = request.POST['login']
+		password = request.POST['password']
+		users = User.objects.filter(login = login)
+		error_message = None
+		if login == '':
+			error_message = 'Please specify a login'
+		elif password == '':
+			error_message = 'Please specify a password'
+		elif len(users) != 0:
+			error_message = 'User "%s" already exists' % login
+		if error_message:
+			return render(request, 'app/signup.html', {
+				'error_message': error_message,
+			})
+		else:
+			password_hash = sha.new(password).hexdigest()
+			User(login = login, password = password_hash).save()
 	return render(request, 'app/signup.html', {})
 
 def movies(request):
