@@ -1,6 +1,11 @@
 {% if movie %}
 	<h1>{{ movie.title }}</h1>
 	<ul>
+		<li>
+			<a href="{% url 'addfavorite' movie.id %}">tre</a>
+		</li>
+	</ul>
+	<ul>
 		{% for key in movie %}
 		<li>{{ key }}<ul><li>{{ movie|get_value:key }}</li></ul></li>
 		{% endfor %}

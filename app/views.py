@@ -31,7 +31,7 @@ def getAPIData(url = '/', parameters = {}):
 	return dataFromUrl(url)
 
 def getMovie(movieId):
-	return getAPIData('/movie/' + movieId, {})
+	return getAPIData('/movie/%d' % movieId, {})
 
 def index(request):
 	return render(request, 'app/index.html', {})
@@ -100,28 +100,39 @@ def movie(request, movie_id):
 	})
 
 def favorites(request):
-	try:
-		movie_list = []
-	except Movie.DoesNotExist:
-		raise Http404('Movie does not exist')
+	movies = []
+	favoriteMovies = User.objects.get(id = 1).favorite_movies.all()
+	for favoriteMovie in favoriteMovies:
+		movies.append(getMovie(favoriteMovie.ext_id))
 	return render(request, 'app/movies.html', {
-		'movie_list': movie_list,
+		'movie_list': movies,
 	})
 
 def watched(request):
-	try:
-		movie_list = []
-	except Movie.DoesNotExist:
-		raise Http404('Movie does not exist')
+	movies = []
+	watchedMovies = User.objects.get(id = 1).watched_movies.all()
+	for watchedMovie in watchedMovies:
+		movies.append(getMovie(watchedMovie.ext_id))
 	return render(request, 'app/movies.html', {
-		'movie_list': movie_list,
+		'movie_list': movies,
 	})
 
 def wished(request):
-	try:
-		movie_list = []
-	except Movie.DoesNotExist:
-		raise Http404('Movie does not exist')
+	movies = []
+	wishedMovies = User.objects.get(id = 1).wished_movies.all()
+	for wishedMovie in wishedMovies:
+		movies.append(getMovie(wishedMovie.ext_id))
 	return render(request, 'app/movies.html', {
-		'movie_list': movie_list,
+		'movie_list': movies,
 	})
+
+def addfavorite(request, movie_id):
+	favoriteMovies = FavoriteMovie.objects.filter(ext_id = movie_id)
+	if len(favoriteMovies) == 0:
+		FavoriteMovie(ext_id = movie_id).save()
+	favoriteMovie = None
+	favoriteMovies = FavoriteMovie.objects.filter(ext_id = movie_id)
+	if len(favoriteMovies) > 0:
+		favoriteMovie = favoriteMovies[0]
+	User.objects.get(id = 1).favorite_movies.add(favoriteMovie)
+	return HttpResponseRedirect('/app/')
