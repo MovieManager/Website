@@ -7,6 +7,11 @@ from .models import *
 from django.utils import timezone
 
 import sha
+import urllib2, json
+
+def dataFromUrl(url):
+	response = urllib2.urlopen(url)
+	return json.load(response)
 
 def index(request):
 	return render(request, 'app/index.html', {})
@@ -62,7 +67,7 @@ def signup(request):
 
 def movies(request):
 	try:
-		movie_list = Movie.objects.order_by('-release_date')
+		movie_list = []
 	except Movie.DoesNotExist:
 		raise Http404('Movie does not exist')
 	return render(request, 'app/movies.html', {
@@ -77,7 +82,7 @@ def movie(request, movie_id):
 
 def favorites(request):
 	try:
-		movie_list = Movie.objects.order_by('-release_date')
+		movie_list = []
 	except Movie.DoesNotExist:
 		raise Http404('Movie does not exist')
 	return render(request, 'app/movies.html', {
@@ -86,7 +91,7 @@ def favorites(request):
 
 def watched(request):
 	try:
-		movie_list = Movie.objects.order_by('-release_date')
+		movie_list = []
 	except Movie.DoesNotExist:
 		raise Http404('Movie does not exist')
 	return render(request, 'app/movies.html', {
@@ -95,7 +100,7 @@ def watched(request):
 
 def wished(request):
 	try:
-		movie_list = Movie.objects.order_by('-release_date')
+		movie_list = []
 	except Movie.DoesNotExist:
 		raise Http404('Movie does not exist')
 	return render(request, 'app/movies.html', {
