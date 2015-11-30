@@ -31,7 +31,7 @@ def getAPIData(url = '/', parameters = {}):
 	return dataFromUrl(url)
 
 def getMovie(movieId):
-	return getAPIData('/movie/%d' % movieId, {})
+	return getAPIData('/movie/%d' % int(movieId), {})
 
 def index(request):
 	return render(request, 'app/index.html', {})
