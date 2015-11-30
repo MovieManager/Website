@@ -57,6 +57,7 @@ def signup(request):
 		else:
 			password_hash = sha.new(password).hexdigest()
 			User(login = login, password = password_hash).save()
+			return HttpResponseRedirect('/app/login/')
 	return render(request, 'app/signup.html', {})
 
 def movies(request):
