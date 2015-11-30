@@ -6,35 +6,25 @@ from .models import *
 from django.utils import timezone
 
 def index(request):
-	template = loader.get_template('app/index.html')
-	context = RequestContext(request, {
-	})
-	return HttpResponse(template.render(context))
+	return render(request, 'app/index.html', {})
 
 def login(request):
-	template = loader.get_template('app/login.html')
-	context = RequestContext(request, {
-	})
-	return HttpResponse(template.render(context))
+	return render(request, 'app/login.html', {})
 
 def signup(request):
-	template = loader.get_template('app/signup.html')
-	context = RequestContext(request, {
-	})
-	return HttpResponse(template.render(context))
+	return render(request, 'app/signup.html', {})
 
 def movies(request):
 	movie_list = Movie.objects.order_by('-release_date')#[:5]
-	template = loader.get_template('app/movies.html')
-	context = RequestContext(request, {
+	return render(request, 'app/movies.html', {
 		'movie_list': movie_list,
 	})
-	return HttpResponse(template.render(context))
 
 def movie(request, movie_id):
-	movie = Movie.objects.get(id = movie_id)
-	template = loader.get_template('app/movie.html')
-	context = RequestContext(request, {
+	try:
+		movie = Movie.objects.get(id = movie_id)
+	except Movie.DoesNotExist:
+		raise Http404('Movie does not exist')
+	return render(request, 'app/movie.html', {
 		'movie': movie,
 	})
-	return HttpResponse(template.render(context))
