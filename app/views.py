@@ -12,6 +12,30 @@ def index(request):
 	return render(request, 'app/index.html', {})
 
 def login(request):
+	if len(request.POST) > 0:
+		login = request.POST['login']
+		password = request.POST['password']
+		password_hash = sha.new(password).hexdigest()
+		users = User.objects.filter(login = login)
+		user = None
+		if len(users) > 0:
+			user = users[0]
+		error_message = None
+		if login == '':
+			error_message = 'Please specify a login'
+		elif password == '':
+			error_message = 'Please specify a password'
+		elif user != None:
+			if user.password != password_hash:
+				error_message = 'Password is incorrect'
+		else:
+			error_message = 'User "%s" does not exist' % login
+		if error_message != None:
+			return render(request, 'app/login.html', {
+				'error_message': error_message,
+			})
+		else:
+			return HttpResponseRedirect('/app/')
 	return render(request, 'app/login.html', {})
 
 def signup(request):
