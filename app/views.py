@@ -86,11 +86,13 @@ def signup(request):
 	return render(request, 'app/signup.html', {})
 
 def movies(request):
+	years =range(1970,2016)
 	results = getAPIData('/discover/movie', {
 		'sort_by': 'popularity.desc'
 	})['results']
 	return render(request, 'app/movies.html', {
 		'movie_list': results,
+		'year_list' : years,
 	})
 
 def movie(request, movie_id):
