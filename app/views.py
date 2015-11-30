@@ -5,16 +5,33 @@ from django.core.urlresolvers import reverse
 
 from .models import *
 from django.utils import timezone
+from django.template.defaulttags import register
 
 import sha
 import urllib2, json
 
-API_KEY = "c98f210d025999131d6987d08f8eecd8"
-API_URL = "https://api.themoviedb.org/3/"
+API_URL = 'http://api.themoviedb.org/3'
+API_KEY = 'c98f210d025999131d6987d08f8eecd8'
+
+@register.filter
+def get_value(dictionary, key):
+	return dictionary.get(key)
 
 def dataFromUrl(url):
 	response = urllib2.urlopen(url)
 	return json.load(response)
+
+def getAPIData(url = '/', parameters = {}):
+	parameters['api_key'] = API_KEY
+	parameter_values = []
+	for key in parameters:
+		parameter_values.append(key + '=' + parameters[key])
+	parameters_string = '&'.join(parameter_values)
+	url = '%s%s?%s' % (API_URL, url, parameters_string)
+	return dataFromUrl(url)
+
+def getMovie(movieId):
+	return getAPIData('/movie/' + movieId, {})
 
 def index(request):
 	return render(request, 'app/index.html', {})
@@ -69,16 +86,15 @@ def signup(request):
 	return render(request, 'app/signup.html', {})
 
 def movies(request):
-	try:
-		movie_list = []
-	except Movie.DoesNotExist:
-		raise Http404('Movie does not exist')
+	results = getAPIData('/discover/movie', {
+		'sort_by': 'popularity.desc'
+	})['results']
 	return render(request, 'app/movies.html', {
-		'movie_list': movie_list,
+		'movie_list': results,
 	})
 
 def movie(request, movie_id):
-	movie = get_object_or_404(Movie, id = movie_id)
+	movie = getMovie(movie_id)
 	return render(request, 'app/movie.html', {
 		'movie': movie,
 	})

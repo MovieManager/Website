@@ -1,23 +1,9 @@
 {% if movie %}
 	<h1>{{ movie.title }}</h1>
-	<table>
-		<tr>
-			<th>description</th>
-			<th>image_url</th>
-			<th>gender</th>
-			<th>release_date</th>
-		</tr>
-		<tr>
-			<td>{{ movie.description }}</td>
-			<td>{{ movie.image_url }}</td>
-			<td>{{ movie.gender }}</td>
-			<td>{{ movie.release_date }}</td>
-		</tr>
-	</table>
 	<ul>
-	{% for movie in latest_movie_list %}
-		<li><a href="/app/movie/{{ movie.id }}/">{{ movie.title }}</a></li>
-	{% endfor %}
+		{% for key in movie %}
+		<li>{{ key }}<ul><li>{{ movie|get_value:key }}</li></ul></li>
+		{% endfor %}
 	</ul>
 {% else %}
 	<h1>Movie unavailable</h1>
