@@ -6,3 +6,7 @@ body {
 .container {
 	padding-top:50px;	
 }
+.options {
+	padding: 20px 20px 20px 20px;
+	width: 300px;
+}
