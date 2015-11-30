@@ -1,6 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.template import RequestContext, loader
+from django.shortcuts import render, get_object_or_404
+from django.http import Http404
 
 from .models import *
 from django.utils import timezone
@@ -15,16 +14,16 @@ def signup(request):
 	return render(request, 'app/signup.html', {})
 
 def movies(request):
-	movie_list = Movie.objects.order_by('-release_date')#[:5]
+	try:
+		movie_list = Movie.objects.order_by('-release_date')
+	except Movie.DoesNotExist:
+		raise Http404('Movie does not exist')
 	return render(request, 'app/movies.html', {
 		'movie_list': movie_list,
 	})
 
 def movie(request, movie_id):
-	try:
-		movie = Movie.objects.get(id = movie_id)
-	except Movie.DoesNotExist:
-		raise Http404('Movie does not exist')
+	movie = get_object_or_404(Movie, id = movie_id)
 	return render(request, 'app/movie.html', {
 		'movie': movie,
 	})
