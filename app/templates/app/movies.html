@@ -47,7 +47,7 @@
 <h1>Welcome to our Movie Manager Django application</h1>
 
 <div class="row">
-  <div class="col-lg-6">
+  <div class="search">
     <div class="input-group">
       <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filters <span class="caret"></span></button>
@@ -57,24 +57,23 @@
               <div class="form-group">
                 <label for="filter">Date</label>
                 <select class="form-control">
-                	{% for i in "x"|rjust:"40" %}
-                    	<option value="{{forloop.counter}}">{{ forloop.counter }}</option>
+                	{% for year in year_list %}
+                    	<option value="{{year}}">{{ year }}</option>
 					{% endfor %}
                 </select>
               </div>
               <div class="form-group">
-                <label for="contain">Author</label>
+                <label for="contain">Type</label>
                 <input class="form-control" type="text" />
               </div>
-              <div class="form-group">
-                <label for="contain">Contains the words</label>
-                <input class="form-control" type="text" />
-              </div>
-              <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+              <button type="submit" class="btn btn-primary">
+              	Search
+              	<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+              </button>
             </form>
         </div>
       </div><!-- /btn-group -->
-      <input type="text" class="form-control" aria-label="..." placeholder="Search by title ...">
+      <input type="text" class="form-control" aria-label="..." placeholder="Search by title and description ...">
       <span class="input-group-btn">
         <button class="btn btn-default" type="button">Search</button>
       </span>
