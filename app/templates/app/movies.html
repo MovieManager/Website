@@ -49,36 +49,36 @@
 {% if search_bar %}
 <div class="row">
   <div class="search">
-    <div class="input-group">
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filters <span class="caret"></span></button>
-        <div class="dropdown-menu dropdown-menu-left options" role="menu">
-            <form class="form-horizontal" role="form">
-			{% csrf_token %}
-              <div class="form-group">
-                <label for="filter">Date</label>
-                <select class="form-control">
-                	{% for year in year_list %}
-                    	<option value="{{year}}">{{ year }}</option>
-					{% endfor %}
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="contain">Type</label>
-                <input class="form-control" type="text" />
-              </div>
-              <button type="submit" class="btn btn-primary">
-              	Search
-              	<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-              </button>
-            </form>
-        </div>
-      </div><!-- /btn-group -->
-      <input type="text" class="form-control" aria-label="..." placeholder="Search by title and description ...">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Search</button>
-      </span>
-    </div><!-- /input-group -->
+    <form class="form-horizontal" role="form">
+		{% csrf_token %}
+	    <div class="input-group">
+	      <div class="input-group-btn">
+	        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filters <span class="caret"></span></button>
+	        <div class="dropdown-menu dropdown-menu-left options" role="menu">
+	              <div class="form-group">
+	                <label for="filter">Date</label>
+	                <select class="form-control">
+	                	{% for year in year_list %}
+	                    	<option value="{{year}}">{{ year }}</option>
+						{% endfor %}
+	                </select>
+	              </div>
+	              <div class="form-group">
+	                <label for="contain">Genre</label>
+	                <input class="form-control" type="text" />
+	              </div>
+	              <!--<button type="submit" class="btn btn-primary">
+	              	Search
+	              	<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+	              </button>-->
+	        </div>
+	      </div><!-- /btn-group -->
+	      <input type="text" class="form-control" aria-label="..." placeholder="Search by title and description ...">
+	      <span class="input-group-btn">
+	        <button class="btn btn-default" type="submit">Search</button>
+	      </span>
+	    </div><!-- /input-group -->
+    </form>
   </div><!-- /.col-lg-6 -->
 </div><!-- /.row -->
 {% endif %}
