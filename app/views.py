@@ -104,7 +104,8 @@ def movies(request):
 	return render(request, 'app/movies.html', {
 		'movie_list': results,
 		'year_list' : years,
-		'search_bar': True
+		'search_bar': True,
+		'search_text': search_text if search_text else ''
 	})
 
 def movie(request, movie_id):
