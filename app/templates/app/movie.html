@@ -1,21 +1,113 @@
+{% load staticfiles %}
+<head>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+<img src="https://image.tmdb.org/t/p/w500/{{ movie.backdrop_path }}" style="position: absolute; opacity: 0.3; z-index: -1; width: 100%; left: 0px;">
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="{% url 'index' %}">Movie Manager</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a href="{% url 'movies' %}">Movies</a></li>
+				<li><a href="{% url 'favorites' %}">Favorite movies</a></li>
+				<li><a href="{% url 'watched' %}">Watched movies</a></li>
+				<li><a href="{% url 'wished' %}">Wished movies</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<!--li><a href="#">Settings</a></li>
+						<li role="separator" class="divider"></li-->
+						<li><a href="{% url 'login' %}">Log out</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>
 {% if movie %}
 	<h1>{{ movie.title }}</h1>
-	<ul>
-		<li>
-			<a href="{% url 'addfavorite' movie.id %}">Add to favorites movies</a>
-		</li>
-		<li>
-			<a href="{% url 'addwatched' movie.id %}">Add to watched movies</a>
-		</li>
-		<li>
-			<a href="{% url 'addwished' movie.id %}">Add to wished movies</a>
-		</li>
-	</ul>
-	<ul>
-		{% for key in movie %}
-		<li>{{ key }}<ul><li>{{ movie|get_value:key }}</li></ul></li>
-		{% endfor %}
-	</ul>
+	<div class="btn-group" role="group" aria-label="...">
+		<button type="button" class="btn btn-default" aria-label="" title="Add to favorite movies">
+			<a href="{% url 'addfavorite' movie.id %}" class="glyphicon glyphicon-star" aria-hidden="true"></a>
+		</button>
+		<button type="button" class="btn btn-default" aria-label="" title="Add to watched movies">
+			<a href="{% url 'addwatched' movie.id %}" class="glyphicon glyphicon-eye-open" aria-hidden="true"></a>
+		</button>
+		<button type="button" class="btn btn-default" aria-label="" title="Add to wished movies">
+			<a href="{% url 'addwished' movie.id %}" class="glyphicon glyphicon-list-alt" aria-hidden="true"></a>
+		</button>
+	</div>
+	<div style="margin: 10px;">
+		<p>
+			<img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" style="float:left; margin: 10px;">
+			{{ movie.overview }}
+		</p>
+		<p>
+			Genres: {% for key in movie.genres %} {{ key.name }} {% endfor %}
+		</p>
+		<p>
+			Production countries: {% for key in movie.production_countries %} {{ key.name }} {% endfor %}
+		</p>
+		{% if movie.video %}
+		<p>
+			Video: {{ movie.video }}
+		</p>
+		{% endif %}
+		{% if movie.tagline %}
+		<p>
+			Tagline: {{ movie.tagline }}
+		</p>
+		{% endif %}
+		<p>
+			Original Language: {{ movie.original_language }}
+		</p>
+		<p>
+			Status: {{ movie.status }}
+		</p>
+		<p>
+			Spoken Languages: {% for key in movie.spoken_languages %} {{ key.name }} {% endfor %}
+		</p>
+		<p>
+			Release Date: {{ movie.release_date }}
+		</p>
+		<p>
+			Popularity: {{ movie.popularity }}
+		</p>
+		<p>
+			Original Title: {{ movie.original_title }}
+		</p>
+		<p>
+			Runtime: {{ movie.runtime }}
+		</p>
+		<p>
+			Vote Average: {{ movie.vote_average }}
+		</p>
+		<p>
+			Production Companies: {% for key in movie.production_companies %} {{ key.name }} {% endfor %}
+		</p>
+	</div>
 {% else %}
 	<h1>Movie unavailable</h1>
 {% endif %}
+</body>
