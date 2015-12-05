@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.template.defaulttags import register
 
 import sha
-import urllib2, json
+import urllib, urllib2, json
 
 API_URL = 'http://api.themoviedb.org/3'
 API_KEY = 'c98f210d025999131d6987d08f8eecd8'
@@ -25,7 +25,7 @@ def getAPIData(url = '/', parameters = {}):
 	parameters['api_key'] = API_KEY
 	parameter_values = []
 	for key in parameters:
-		parameter_values.append(key + '=' + parameters[key])
+		parameter_values.append(key + '=' + urllib.quote(parameters[key]))
 	parameters_string = '&'.join(parameter_values)
 	url = '%s%s?%s' % (API_URL, url, parameters_string)
 	return dataFromUrl(url)
