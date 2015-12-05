@@ -82,7 +82,7 @@ def signup(request):
 		else:
 			password_hash = sha.new(password).hexdigest()
 			User(login = login, password = password_hash).save()
-			return HttpResponseRedirect('/app/login/')
+			return HttpResponseRedirect('/app/')
 	return render(request, 'app/signup.html', {})
 
 def movies(request):
@@ -137,4 +137,26 @@ def addfavorite(request, movie_id):
 	if len(favoriteMovies) > 0:
 		favoriteMovie = favoriteMovies[0]
 	User.objects.get(id = 1).favorite_movies.add(favoriteMovie)
+	return HttpResponseRedirect('/app/')
+
+def addwatched(request, movie_id):
+	watchedMovies = WatchedMovie.objects.filter(ext_id = movie_id)
+	if len(watchedMovies) == 0:
+		WatchedMovie(ext_id = movie_id).save()
+	watchedMovie = None
+	watchedMovies = WatchedMovie.objects.filter(ext_id = movie_id)
+	if len(watchedMovies) > 0:
+		watchedMovie = watchedMovies[0]
+	User.objects.get(id = 1).watched_movies.add(watchedMovie)
+	return HttpResponseRedirect('/app/')
+
+def addwished(request, movie_id):
+	wishedMovies = WishedMovie.objects.filter(ext_id = movie_id)
+	if len(wishedMovies) == 0:
+		WishedMovie(ext_id = movie_id).save()
+	wishedMovie = None
+	wishedMovies = WishedMovie.objects.filter(ext_id = movie_id)
+	if len(wishedMovies) > 0:
+		wishedMovie = wishedMovies[0]
+	User.objects.get(id = 1).wished_movies.add(wishedMovie)
 	return HttpResponseRedirect('/app/')

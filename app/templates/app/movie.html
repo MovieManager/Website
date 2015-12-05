@@ -2,7 +2,13 @@
 	<h1>{{ movie.title }}</h1>
 	<ul>
 		<li>
-			<a href="{% url 'addfavorite' movie.id %}">tre</a>
+			<a href="{% url 'addfavorite' movie.id %}">Add to favorites movies</a>
+		</li>
+		<li>
+			<a href="{% url 'addwatched' movie.id %}">Add to watched movies</a>
+		</li>
+		<li>
+			<a href="{% url 'addwished' movie.id %}">Add to wished movies</a>
 		</li>
 	</ul>
 	<ul>
