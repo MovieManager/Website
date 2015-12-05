@@ -46,6 +46,7 @@
 </nav>
 <h1>Welcome to our Movie Manager Django application</h1>
 
+{% if search_bar %}
 <div class="row">
   <div class="search">
     <div class="input-group">
@@ -80,6 +81,7 @@
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
 </div><!-- /.row -->
+{% endif %}
 
 <div class="row" style="padding-top:50px;">
 	{% if movie_list %}

@@ -93,6 +93,7 @@ def movies(request):
 	return render(request, 'app/movies.html', {
 		'movie_list': results,
 		'year_list' : years,
+		'search_bar': True
 	})
 
 def movie(request, movie_id):
