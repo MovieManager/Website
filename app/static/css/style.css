@@ -18,6 +18,7 @@ body {
 }
 .portfolio-item {
     margin-bottom: 25px;
+    height: 450px;
 }
 
 footer {
