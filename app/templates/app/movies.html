@@ -96,7 +96,7 @@
 		        </h3>
 		        <p>Release date : {{ movie.release_date }}</p>
 		        <p>Vote average : {{ movie.vote_average }}</p>
-		        <p style="text-align:justify;">Description : {{ movie.overview | truncatechars:130 }}</p>
+		        <p style="text-align:justify;">Description : {{ movie.overview | truncatechars:200 }}</p>
 		    </div>
 		{% endfor %}
 	{% else %}
