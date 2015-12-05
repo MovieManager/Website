@@ -86,10 +86,21 @@ def signup(request):
 	return render(request, 'app/signup.html', {})
 
 def movies(request):
-	years =range(1970,2016)
-	results = getAPIData('/discover/movie', {
-		'sort_by': 'popularity.desc'
-	})['results']
+	results = []
+	search_text = None
+	if len(request.POST) > 0:
+		search_text = request.POST['search_text']
+		if search_text == '':
+			search_text = None
+	if search_text != None:
+		results = getAPIData('/search/movie', {
+			'query': search_text
+		})['results']
+	else:
+		results = getAPIData('/discover/movie', {
+			'sort_by': 'popularity.desc'
+		})['results']
+	years = range(1970,2016)
 	return render(request, 'app/movies.html', {
 		'movie_list': results,
 		'year_list' : years,
