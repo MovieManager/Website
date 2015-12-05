@@ -81,14 +81,27 @@
   </div><!-- /.col-lg-6 -->
 </div><!-- /.row -->
 
-{% if movie_list %}
-	<ul>
-	{% for movie in movie_list %}
-		<li><a href="{% url 'movie' movie.id %}">{{ movie.title }}</a></li>
-	{% endfor %}
-	</ul>
-{% else %}
-	<p>No movies are available.</p>
-{% endif %}
+<div class="row" style="padding-top:50px;">
+	{% if movie_list %}
+		{% for movie in movie_list %}
+		    <div style="text-align:center;padding-bottom:30px;" class="col-md-4 portfolio-item">
+		        <a href="{% url 'movie' movie.id %}">
+		            <img style="margin-left:auto;margin-right:auto;" class="img-responsive" src="http://image.tmdb.org/t/p/w185/{{movie.poster_path}}" alt="">
+		        </a>
+		        <h3>
+		            <a href="{% url 'movie' movie.id %}">{{ movie.title | truncatechars:28 }}</a>
+		        </h3>
+		        <p>Release date : {{ movie.release_date }}</p>
+		        <p>Vote average : {{ movie.vote_average }}</p>
+		        <p style="text-align:justify;">Description : {{ movie.overview | truncatechars:130 }}</p>
+		    </div>
+		{% endfor %}
+	{% else %}
+		<p>No movies are available.</p>
+	{% endif %}
+
+</div>
+<!-- /.row -->
+
 
 </body>
