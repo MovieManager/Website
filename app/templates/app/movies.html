@@ -44,7 +44,11 @@
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>
+{% if favorite_movies %}
+<h1>Favorite movies</h1>
+{% else %}
 <h1>Welcome to our Movie Manager Django application</h1>
+{% endif %}
 
 {% if search_bar %}
 <div class="row">
@@ -93,6 +97,24 @@
 		        </a>
 		        <h3>
 		            <a href="{% url 'movie' movie.id %}">{{ movie.title | truncatechars:28 }}</a>
+					{% if wished_movies %}
+						<button type="button" class="btn btn-default" aria-label="" title="Move to watched movies">
+							<a href="{% url 'movetowatched' movie.id %}" class="glyphicon glyphicon-eye-open" aria-hidden="true"></a>
+						</button>
+					{% endif %}
+					{% if favorite_movies %}
+						<button type="button" class="btn btn-default" aria-label="" title="Remove from favorite movies">
+							<a href="{% url 'removefavorite' movie.id %}" class="glyphicon glyphicon-ban-circle" aria-hidden="true"></a>
+						</button>
+					{% elif watched_movies %}
+						<button type="button" class="btn btn-default" aria-label="" title="Remove from watched movies">
+							<a href="{% url 'removewatched' movie.id %}" class="glyphicon glyphicon-ban-circle" aria-hidden="true"></a>
+						</button>
+					{% elif wished_movies %}
+						<button type="button" class="btn btn-default" aria-label="" title="Remove from wished movies">
+							<a href="{% url 'removewished' movie.id %}" class="glyphicon glyphicon-ban-circle" aria-hidden="true"></a>
+						</button>
+					{% endif %}
 		        </h3>
 		        <p>Release date : {{ movie.release_date }}</p>
 		        <p>Vote average : {{ movie.vote_average }}</p>
