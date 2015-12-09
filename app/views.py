@@ -227,9 +227,9 @@ def movetowatched(request, movie_id):
 def getfavoritegenres():
 	genres = []
 	favorites = getfavorites()
-	for favorite in favorites :
-		for genre in favorite.genres :
-			genres.append(genre.id)
+	for favorite in favorites:
+		for genre in favorite['genres']:
+			genres.append(str(genre['id']))
 	return genres
 
 
