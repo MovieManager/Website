@@ -221,14 +221,10 @@ def movetowatched(request, movie_id):
 	return addwatched(request, movie_id)
 
 def recommendations(request):
-	results = []
-	movies = []
-
-	params = {
-		'': ''
-	}
-
-	results = getAPIData('/discover/movie', params)['results']
+	results = getAPIData('/discover/movie', {
+		'sort_by': 'popularity.desc',
+		'with_genres': '|'.join(getfavoritegenres())
+	})['results']
 
 	return render(request, 'app/movies.html', {
 		'movie_list': results,
