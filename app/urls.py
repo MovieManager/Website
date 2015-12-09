@@ -18,5 +18,5 @@ urlpatterns = [
 	url(r'^favorite-movies/$', views.favorites, name='favorites'),
 	url(r'^watched-movies/$', views.watched, name='watched'),
 	url(r'^wished-movies/$', views.wished, name='wished'),
-	url(r'^recommendations/$', views.movies, name='recommendations'),
+	url(r'^recommendations/$', views.recommendations, name='recommendations'),
 ]
