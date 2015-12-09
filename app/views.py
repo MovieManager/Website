@@ -126,11 +126,15 @@ def movie(request, movie_id):
 		'movie': movie,
 	})
 
-def favorites(request):
+def getfavorites():
 	movies = []
 	favoriteMovies = User.objects.get(id = 1).favorite_movies.all()
 	for favoriteMovie in favoriteMovies:
 		movies.append(getMovie(favoriteMovie.ext_id))
+	return movies
+
+def favorites(request):
+	movies = getfavorites()
 	return render(request, 'app/movies.html', {
 		'movie_list': movies,
 		'favorite_movies': True,
@@ -220,9 +224,19 @@ def movetowatched(request, movie_id):
 	removewished(request, movie_id)
 	return addwatched(request, movie_id)
 
+def getfavoritegenres():
+	genres = []
+	favorites = getfavorites()
+	for favorite in favorites :
+		for genre in favorite.genres :
+			genres.append(genre.id)
+	return genres
+
+
 def recommendations(request):
 	results = []
 	movies = []
+
 
 	params = {
 		'': ''
