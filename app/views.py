@@ -133,6 +133,7 @@ def favorites(request):
 		movies.append(getMovie(favoriteMovie.ext_id))
 	return render(request, 'app/movies.html', {
 		'movie_list': movies,
+		'favorite_movies': True,
 	})
 
 def watched(request):
@@ -142,6 +143,7 @@ def watched(request):
 		movies.append(getMovie(watchedMovie.ext_id))
 	return render(request, 'app/movies.html', {
 		'movie_list': movies,
+		'watched_movies': True,
 	})
 
 def wished(request):
@@ -151,6 +153,7 @@ def wished(request):
 		movies.append(getMovie(wishedMovie.ext_id))
 	return render(request, 'app/movies.html', {
 		'movie_list': movies,
+		'wished_movies': True,
 	})
 
 def addfavorite(request, movie_id):
@@ -162,7 +165,7 @@ def addfavorite(request, movie_id):
 	if len(favoriteMovies) > 0:
 		favoriteMovie = favoriteMovies[0]
 	User.objects.get(id = 1).favorite_movies.add(favoriteMovie)
-	return HttpResponseRedirect('/app/')
+	return HttpResponseRedirect('/app/favorite-movies/')
 
 def addwatched(request, movie_id):
 	watchedMovies = WatchedMovie.objects.filter(ext_id = movie_id)
@@ -173,7 +176,7 @@ def addwatched(request, movie_id):
 	if len(watchedMovies) > 0:
 		watchedMovie = watchedMovies[0]
 	User.objects.get(id = 1).watched_movies.add(watchedMovie)
-	return HttpResponseRedirect('/app/')
+	return HttpResponseRedirect('/app/watched-movies/')
 
 def addwished(request, movie_id):
 	wishedMovies = WishedMovie.objects.filter(ext_id = movie_id)
@@ -184,7 +187,38 @@ def addwished(request, movie_id):
 	if len(wishedMovies) > 0:
 		wishedMovie = wishedMovies[0]
 	User.objects.get(id = 1).wished_movies.add(wishedMovie)
-	return HttpResponseRedirect('/app/')
+	return HttpResponseRedirect('/app/wished-movies/')
+
+def removefavorite(request, movie_id):
+	favoriteMovie = None
+	favoriteMovies = FavoriteMovie.objects.filter(ext_id = movie_id)
+	if len(favoriteMovies) > 0:
+		favoriteMovie = favoriteMovies[0]
+	if favoriteMovie != None:
+		User.objects.get(id = 1).favorite_movies.remove(favoriteMovie)
+	return HttpResponseRedirect('/app/favorite-movies/')
+
+def removewatched(request, movie_id):
+	watchedMovie = None
+	watchedMovies = WatchedMovie.objects.filter(ext_id = movie_id)
+	if len(watchedMovies) > 0:
+		watchedMovie = watchedMovies[0]
+	if watchedMovie != None:
+		User.objects.get(id = 1).watched_movies.remove(watchedMovie)
+	return HttpResponseRedirect('/app/watched-movies/')
+
+def removewished(request, movie_id):
+	wishedMovie = None
+	wishedMovies = WishedMovie.objects.filter(ext_id = movie_id)
+	if len(wishedMovies) > 0:
+		wishedMovie = wishedMovies[0]
+	if wishedMovie != None:
+		User.objects.get(id = 1).wished_movies.remove(wishedMovie)
+	return HttpResponseRedirect('/app/wished-movies/')
+
+def movetowatched(request, movie_id):
+	removewished(request, movie_id)
+	return addwatched(request, movie_id)
 
 def recommendations(request):
 	results = []
