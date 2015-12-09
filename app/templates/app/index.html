@@ -44,5 +44,60 @@
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>
-<h1>Welcome to our Movie Manager Django application</h1>
+<header class="jumbotron hero-spacer">
+    <h1 style="font-size:3em;">Welcome to our Movie Manager Django application</h1>
+    <p>Now, you can create your own favorite, wished or even watched lists ! You won't waste your time by trying to remember if you already had watched a film or which one you really wanted to watch ... </p>
+    <p><a href="{% url 'movies' %}" class="btn btn-primary btn-large">Search for films !</a>
+    </p>
+</header>
+
+<!-- Title -->
+<div class="row">
+    <div class="col-lg-12">
+        <h3>Features</h3>
+    </div>
+</div>
+<!-- /.row -->
+
+<!-- Page Features -->
+<div class="row text-center">
+
+    <div class="col-md-3 col-sm-6 hero-feature">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>LMDb API</h3>
+                <p>Primary info, alternative titles, cast, images (posters, backdrops) and more...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 hero-feature">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>Your account</h3>
+                <p>You can create your own favortite, watch and wish lists</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 hero-feature">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>Recommendations</h3>
+                <p>We will propose you a list of movie you could like according to your lists</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 hero-feature">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3>Bootstrap Design</h3>
+                <p>Be able to view the information of a movie in a nice way</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.row -->
 </body>
