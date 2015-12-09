@@ -88,18 +88,30 @@ def signup(request):
 def movies(request):
 	results = []
 	search_text = None
+	search_date = None
+	search_genre = None
 	if len(request.POST) > 0:
 		search_text = request.POST['search_text']
+		search_date = request.POST['search_date']
+		search_genre = request.POST['search_genre']
 		if search_text == '':
 			search_text = None
+		if search_date == '':
+			search_date = None
+		if search_genre == '':
+			search_genre = None
 	if search_text != None:
 		results = getAPIData('/search/movie', {
 			'query': search_text
 		})['results']
 	else:
-		results = getAPIData('/discover/movie', {
+		params = {
 			'sort_by': 'popularity.desc'
-		})['results']
+		}
+		if search_date != None:
+			params['release_date.gte'] = search_date + '-01-01'
+			params['release_date.lte'] = search_date + '-12-31'
+		results = getAPIData('/discover/movie', params)['results']
 	years = range(1970,2016)
 	return render(request, 'app/movies.html', {
 		'movie_list': results,
