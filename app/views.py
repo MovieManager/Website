@@ -185,3 +185,17 @@ def addwished(request, movie_id):
 		wishedMovie = wishedMovies[0]
 	User.objects.get(id = 1).wished_movies.add(wishedMovie)
 	return HttpResponseRedirect('/app/')
+
+def recommendations(request):
+	results = []
+	movies = []
+
+	params = {
+		'': ''
+	}
+
+	results = getAPIData('/discover/movie', params)['results']
+
+	return render(request, 'app/movies.html', {
+		'movie_list': results,
+	})
