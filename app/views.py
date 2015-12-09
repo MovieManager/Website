@@ -240,4 +240,5 @@ def recommendations(request):
 	})['results']
 	return render(request, 'app/movies.html', {
 		'movie_list': results,
+		'recommendations': True,
 	})

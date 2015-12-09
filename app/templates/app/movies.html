@@ -47,6 +47,12 @@
 </nav>
 {% if favorite_movies %}
 <h1>Favorite movies</h1>
+{% elif watched_movies %}
+<h1>Watched movies</h1>
+{% elif wished_movies %}
+<h1>Wished movies</h1>
+{% elif recommendations %}
+<h1>Recommendations</h1>
 {% else %}
 <h1>Welcome to our Movie Manager Django application</h1>
 {% endif %}
